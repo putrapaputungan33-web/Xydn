@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Barcode & QR Nomor Telepon</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs2@0.0.2/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Generator Nomor Telepon</h1>
+    <p>Masukkan nomor telepon lalu klik <b>Generate</b> untuk membuat barcode & QR.</p>
+    
+    <div class="input-box">
+      <input id="phone" type="text" value="+6288802337621" placeholder="Masukkan nomor telepon">
+      <button onclick="generate()">Generate</button>
+    </div>
+
+    <div class="card">
+      <h2>Barcode (Code128)</h2>
+      <svg id="barcode"></svg>
+    </div>
+
+    <div class="card">
+      <h2>QR Code (tel:)</h2>
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <script>
+    function generate() {
+      let phone = document.getElementById("phone").value.trim();
+
+      // Barcode
+      JsBarcode("#barcode", phone, {
+        format: "CODE128",
+        lineColor: "#000",
+        width: 2,
+        height: 80,
+        displayValue: true,
+        fontSize: 14
+      });
+
+      // QR tel:
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: "tel:" + phone,
+        width: 180,
+        height: 180
+      });
+    }
+    // generate awal
+    generate();
+  </script>
+</body>
+</html>
